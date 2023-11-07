@@ -29,7 +29,25 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
+          
+      - name: env세팅
+        env:
+          REACT_APP_CLIENT_KEY: ${{ secrets.REACT_APP_CLIENT_KEY }}
+          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
+          REACT_APP_GITHUB_IP: ${{ secrets.REACT_APP_GITHUB_IP }}
+          REACT_APP_PORT: ${{ secrets.REACT_APP_PORT }}
+          REACT_APP_PAY_API_KEY: ${{ secrets.REACT_APP_PAY_API_KEY }}
+          REACT_APP_PAY_API_SECRET_KEY: ${{ secrets.REACT_APP_PAY_API_SECRET_KEY }}
+        
+        run: |
+          echo "REACT_APP_CLIENT_KEY=${REACT_APP_CLIENT_KEY}" >> .env
+          echo "REACT_APP_API_KEY=${REACT_APP_API_KEY}" >> .env
+          echo "REACT_APP_GITHUB_IP=${REACT_APP_GITHUB_IP}" >> .env
+          echo "REACT_APP_PORT=${REACT_APP_PORT}" >> .env
+          echo "REACT_APP_PAY_API_KEY=${REACT_APP_PAY_API_KEY}" >> .env
+          echo "REACT_APP_PAY_API_SECRET_KEY=${REACT_APP_PAY_API_SECRET_KEY}" >> .env
+          
+         
       - name: CloudFront 캐시 무력화 설정
         uses: chetan/invalidate-cloudfront-action@v2
         env:
