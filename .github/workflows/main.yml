@@ -48,7 +48,7 @@ jobs:
           echo "REACT_APP_PORT=${REACT_APP_PORT}" >> .env
           echo "REACT_APP_PAY_API_KEY=${REACT_APP_PAY_API_KEY}" >> .env
           echo "REACT_APP_PAY_API_SECRET_KEY=${REACT_APP_PAY_API_SECRET_KEY}" >> .env
-          
+          cat .env
          
       - name: CloudFront 캐시 무력화 설정
         uses: chetan/invalidate-cloudfront-action@v2
