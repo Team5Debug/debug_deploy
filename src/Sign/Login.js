@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 const client_id = process.env.REACT_APP_CLIENT_KEY;
 console.log(client_id);
-console.log("196000985280-ijrvdo2jn00vqplandu7qa8gk4m7is0e.apps.googleusercontent.com")
 function setSessionCookie(sessionId) {
   document.cookie = `JSESSIONID=${sessionId}; path=/;`;
 }
