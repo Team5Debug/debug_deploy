@@ -4,8 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const client_id = process.env.REACT_APP_CLIENT_KEY;
-//const SCOPE = 'https://www.googleapis.com/auth/cloud-platform.read-only'
-const SCOPE = 'https://www.googleapis.com/auth/userinfo.email'
+
 function setSessionCookie(sessionId) {
   document.cookie = `JSESSIONID=${sessionId}; path=/;`;
 }
@@ -15,11 +14,14 @@ const authenticate = async () => {  // 사용자 인증 후 YouTube API에 접�
       const options = {
         prompt: 'select_account' // 계정 강제 선택
       };
-      await gapi.client.init({
-        client_id: client_id,
-        scope: SCOPE
-      });
-      await gapi.auth2.getAuthInstance().signIn(options); //구글 auth에 접근하는 함수
+      const auth2 = gapi.auth2.getAuthInstance() 
+                ? gapi.auth2.getAuthInstance() 
+                : await gapi.auth2.init({
+                    client_id: client_id,
+                    scope: 'profile'
+                  });
+
+     await auth2.signIn(options);
   
       const user = gapi.auth2.getAuthInstance().currentUser.get();  // 유저 정보
       const serverIP = process.env.REACT_APP_GITHUB_IP;
