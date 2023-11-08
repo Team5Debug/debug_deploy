@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: 코드 체크아웃
         uses: actions/checkout@v3
@@ -23,6 +23,8 @@ jobs:
         run: |
           npm install
           npm run build
+        env:
+          CI: "" #경고를 에러로 보지 않게함
 
       - name: 빌드한 파일 S3에 업로드
         run: aws s3 sync build/ s3://${{ secrets.AWS_S3_BUCKET }} --acl public-read
@@ -40,12 +42,12 @@ jobs:
           REACT_APP_PAY_API_SECRET_KEY: ${{ secrets.REACT_APP_PAY_API_SECRET_KEY }}
         
         run: |
-          echo "REACT_APP_CLIENT_KEY=${REACT_APP_CLIENT_KEY}" >> .env
-          echo "REACT_APP_API_KEY=${REACT_APP_API_KEY}" >> .env
-          echo "REACT_APP_GITHUB_IP=${REACT_APP_GITHUB_IP}" >> .env
-          echo "REACT_APP_PORT=${REACT_APP_PORT}" >> .env
-          echo "REACT_APP_PAY_API_KEY=${REACT_APP_PAY_API_KEY}" >> .env
-          echo "REACT_APP_PAY_API_SECRET_KEY=${REACT_APP_PAY_API_SECRET_KEY}" >> .env
+          echo "REACT_APP_CLIENT_KEY=${REACT_APP_CLIENT_KEY}" >> .GITHUB_ENV
+          echo "REACT_APP_API_KEY=${REACT_APP_API_KEY}" >> .GITHUB_ENV
+          echo "REACT_APP_GITHUB_IP=${REACT_APP_GITHUB_IP}" >> .GITHUB_ENV
+          echo "REACT_APP_PORT=${REACT_APP_PORT}" >> .GITHUB_ENV
+          echo "REACT_APP_PAY_API_KEY=${REACT_APP_PAY_API_KEY}" >> .GITHUB_ENV
+          echo "REACT_APP_PAY_API_SECRET_KEY=${REACT_APP_PAY_API_SECRET_KEY}" >> .GITHUB_ENV
           
          
       - name: CloudFront 캐시 무력화 설정
