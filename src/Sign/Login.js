@@ -17,39 +17,33 @@ const authenticate = async () => {  // 사용자 인증 후 YouTube API에 접�
       await gapi.client.init({
         client_id: client_id
       });
-      const auth2 = gapi.auth2.getAuthInstance();
-      if (auth2 != null) {
-        await auth2.signIn(options);
+      await gapi.auth2.getAuthInstance().signIn(options);
   
-        const user = gapi.auth2.getAuthInstance().currentUser.get();  // 유저 정보
-        const serverIP = process.env.REACT_APP_GITHUB_IP;
-        const port = process.env.REACT_APP_PORT;
-        axios.get(`http://${serverIP}:${port}/find`,{    // 액세스 토큰을 받아오는 HTTP 요청을 보냅니다.
-          params:{
-            id_token: String(user.xc.id_token),
-            access_token: String(user.xc.access_token),
-          }
-        }).then((res)=>{
-          if((res.status == "200")){
-            const sessionId = res.data;
-            setSessionCookie(sessionId);
-            sessionStorage.setItem('userInfo', JSON.stringify(res.data));  // 세션 저장
-            setTimeout(() => {
-              window.location.replace("/");
-            }, 500); 
-          } else {
-            alert("서버와 접속이 실패하셨습니다.");
+      const user = gapi.auth2.getAuthInstance().currentUser.get();  // 유저 정보
+      const serverIP = process.env.REACT_APP_GITHUB_IP;
+      const port = process.env.REACT_APP_PORT;
+      axios.get(`http://${serverIP}:${port}/find`,{    // 액세스 토큰을 받아오는 HTTP 요청을 보냅니다.
+        params:{
+          id_token: String(user.xc.id_token),
+          access_token: String(user.xc.access_token),
+        }
+      }).then((res)=>{
+        if((res.status == "200")){
+          const sessionId = res.data;
+          setSessionCookie(sessionId);
+          sessionStorage.setItem('userInfo', JSON.stringify(res.data));  // 세션 저장
+          setTimeout(() => {
             window.location.replace("/");
-          }
-        })
-        .catch((Error)=>{
+          }, 500); 
+        } else {
           alert("서버와 접속이 실패하셨습니다.");
           window.location.replace("/");
-        })
-      } else {
-        console.error('gapi.auth2 인스턴스를 가져오는 데 실패했습니다.');
-      }
-      
+        }
+      })
+      .catch((Error)=>{
+        alert("서버와 접속이 실패하셨습니다.");
+        window.location.replace("/");
+      })
     } catch (error) {
       console.error('로그인에 실패했습니다.', error);
     }
