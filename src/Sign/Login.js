@@ -4,60 +4,71 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const client_id = process.env.REACT_APP_CLIENT_KEY;
-console.log(client_id);
-console.log(process.env.REACT_APP_REACT_APP_API_KEY);
-console.log(process.env.REACT_APP_GITHUB_IP);
-function setSessionCookie(sessionId) {
-  document.cookie = `JSESSIONID=${sessionId}; path=/;`;
-}
+const REDIRECT_URI = 'http://localhost:3000/callback';
 
 const authenticate = async () => {  // 사용자 인증 후 YouTube API에 접근할 수 있는 권한 부여
     try {
       const options = {
         prompt: 'select_account' // 계정 강제 선택
       };
-     const auth2 = gapi.auth2.getAuthInstance() 
-                ? gapi.auth2.getAuthInstance() 
-                : await gapi.client.init({
-                    client_id: client_id,
-                    scope: 'profile'
-                  });
-
-     await auth2.signIn(options);
+      await gapi.client.init({
+        client_id: client_id
+      });
+      const auth2 = gapi.auth2.getAuthInstance();
+      if (auth2 != null) {
+        await auth2.signIn(options);
   
-      const user = gapi.auth2.getAuthInstance().currentUser.get();  // 유저 정보
-      const serverIP = process.env.REACT_APP_GITHUB_IP;
-      const port = process.env.REACT_APP_PORT;
-      axios.get(`http://${serverIP}:${port}/find`,{    // 액세스 토큰을 받아오는 HTTP 요청을 보냅니다.
-        params:{
-          id_token: String(user.xc.id_token),
-          access_token: String(user.xc.access_token),
-        }
-      }).then((res)=>{
-        if((res.status == "200")){
-          const sessionId = res.data;
-          setSessionCookie(sessionId);
-          sessionStorage.setItem('userInfo', JSON.stringify(res.data));  // 세션 저장
-          setTimeout(() => {
+        const user = gapi.auth2.getAuthInstance().currentUser.get();  // 유저 정보
+        const serverIP = process.env.REACT_APP_GITHUB_IP;
+        const port = process.env.REACT_APP_PORT;
+        axios.get(`http://${serverIP}:${port}/find`,{    // 액세스 토큰을 받아오는 HTTP 요청을 보냅니다.
+          params:{
+            id_token: String(user.xc.id_token),
+            access_token: String(user.xc.access_token),
+          }
+        }).then((res)=>{
+          if((res.status == "200")){
+            sessionStorage.setItem('userInfo', JSON.stringify(res.data));  // 세션 저장
+            setTimeout(() => {
+              window.location.replace("/");
+            }, 500); 
+          } else {
+            alert("서버와 접속이 실패하셨습니다.");
             window.location.replace("/");
-          }, 500); 
-        } else {
+          }
+        })
+        .catch((Error)=>{
           alert("서버와 접속이 실패하셨습니다.");
           window.location.replace("/");
-        }
-      })
-      .catch((Error)=>{
-        alert("서버와 접속이 실패하셨습니다.");
-        window.location.replace("/");
-      })
+        })
+      } else {
+        console.error('gapi.auth2 인스턴스를 가져오는 데 실패했습니다.');
+      }
+      
     } catch (error) {
       console.error('로그인에 실패했습니다.', error);
     }
   };
 
 const Login = () => {
+  const handleLogin = () => {
+    const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
+    const options = {
+        redirect_uri: REDIRECT_URI,
+        client_id: client_id,
+        access_type: 'offline',
+        response_type: 'code',
+        scope: 'https://www.googleapis.com/auth/youtube.readonly',
+        state: 'state_parameter_passthrough_value',
+        include_granted_scopes: true
+        // 필요한 추가 스코프를 여기에 추가
+    };
+
+    const qs = new URLSearchParams(options);
+    window.location = `${rootUrl}?${qs.toString()}`;
+};
     return (
-      <GoogleLogin onClick={authenticate}>
+      <GoogleLogin onClick={handleLogin}>
         <Login_str>
           <img src="img/GoogleLogo.png" alt="Google Logo" style={{width: "45px", top: "-1px"}}/>
           Continue with Google
