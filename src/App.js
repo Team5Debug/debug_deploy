@@ -12,7 +12,8 @@ import RankingPage from './Pages/RankingPage';
 import Feedback from './Pages/Feedback';
 import InfoPage from './Pages/InfoPage';
 import SubScriptionPage from './Pages/SubscriptionPage';
-import InfonavPage from './Pages/Infonavpage';
+import InfonavPage from './Pages/InfonavPage';
+import Callback from './Sign/Callback';
 
 function App() {
   
@@ -35,6 +36,7 @@ function App() {
       <Route path = "/infonav/*" element={<InfonavPage />}/>
       <Route path = "/info" element={<InfoPage />}></Route> 
       <Route path = "/subscript" element={<SubScriptionPage />}></Route>
+      <Route path = "/callback" element={<Callback />}></Route>
     </Routes>
     </ContentContainer>
     </LayoutContainer>
