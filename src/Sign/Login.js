@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const client_id = process.env.REACT_APP_CLIENT_KEY;
 const REDIRECT_URI = 'http://localhost:3000/callback';
+console.log("client_id : " + client_id);
 
 const authenticate = async () => {  // 사용자 인증 후 YouTube API에 접근할 수 있는 권한 부여
     try {
