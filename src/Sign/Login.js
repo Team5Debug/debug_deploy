@@ -3,6 +3,17 @@ import { gapi } from 'gapi-script';
 import axios from 'axios';
 import styled from 'styled-components';
 
+// 설치한 패키지 불러오기
+const multerS3 = require('multer-s3');
+const AWS = require('aws-sdk');
+
+// region - AWS에서 EC2 작업 시 설정한 지역
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: 'us-east-2',
+});
+
 const client_id = process.env.REACT_APP_CLIENT_KEY;
 const REDIRECT_URI = 'http://localhost:3000/callback';
 console.log("client_id : " + client_id);
