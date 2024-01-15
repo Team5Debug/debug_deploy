@@ -4,7 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const API_KEY = secrets.REACT_APP_API_KEY;
-const CLIENT_ID = secrets.REACT_APP_CLIENT_KEY;
+const CLIENT_ID = REACT_APP_CLIENT_KEY;
 console.log("API_KEY : " + API_KEY);
 console.log("CLIENT_ID : " + CLIENT_ID);
 
