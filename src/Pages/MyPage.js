@@ -33,20 +33,16 @@ const MyPage = () =>  {
         email: String(JSON.parse(sessionStorage.getItem('userInfo'))._id),
       }
     })
-      .then((res) => {
-        console.log("broadCastsData", res.data.broadCasts);
-        console.log("yearsData", res.data.years)
-        setBroadCasts(res.data.broadCasts)  // 방송별 데이터
-        setYearsData(res.data.years); // 연도별 데이터
+    .then((res) => {
+      setBroadCasts(res.data.broadCasts)  // 방송별 데이터
+      setYearsData(res.data.years); // 연도별 데이터
+      console.log(res.data.years)
+      if(res.data.years === undefined || res.data.years.length === 0) {
+        setModal(true);
       }
-      )
-      .catch((Error) => { console.log(Error) });
+    })
+    .catch((Error) => { console.log(Error) });
   }, []);
-
-  const logoutButton = () => {  // 로그 아웃
-    sessionStorage.clear()
-    window.location.replace("/");
-  }
 
   const handleEntireButton = (e) => { // 전체 데이터 Select
     setModal(false);
@@ -355,10 +351,15 @@ const MyPage = () =>  {
           }}
         >
           <option value="">연도별</option>
-          <option value="2020">2020</option>
+          {yearsData.map((year, i) => {
+            const years = year._id.substring(0,4);
+            console.log(years);
+            return <option key={years}>{years}</option>
+          })}
+          {/* <option value="2020">2020</option>
           <option value="2021">2021</option>
           <option value="2022">2022</option>
-          <option value="2023">2023</option>
+          <option value="2023">2023</option> */}
         </YearSelect>
         <MonthSelect
           value={monthSelectValue}
