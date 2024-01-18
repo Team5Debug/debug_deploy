@@ -15,9 +15,10 @@ import styled from 'styled-components';
 // });
 
 // const client_id = process.env[REACT_APP_CLIENT_KEY];
-const client_id = process.env['REACT_APP_CLIENT_KEY'];
+const client_id = process.env.REACT_APP_CLIENT_KEY;
 const REDIRECT_URI = 'http://localhost:3000/callback';
 console.log("client_id 1: " + client_id);
+console.log("node:",process.env.NODE_ENV)
 const authenticate = async () => {  // 사용자 인증 후 YouTube API에 접근할 수 있는 권한 부여
     try {
       const options = {
