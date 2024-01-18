@@ -24,7 +24,7 @@ const authenticate = async () => {  // 사용자 인증 후 YouTube API에 접�
         prompt: 'select_account' // 계정 강제 선택
       };
       await gapi.client.init({
-        client_id: client_id
+        client_id: client_id+'.apps.googleusercontent.com'
       });
       const auth2 = gapi.auth2.getAuthInstance();
       if (auth2 != null) {
