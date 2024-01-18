@@ -15,7 +15,7 @@ import styled from 'styled-components';
 // });
 
 // const client_id = process.env[REACT_APP_CLIENT_KEY];
-const client_id = process.env.REACT_APP_CLIENT_KEY;
+const client_id = import.meta.env.REACT_APP_CLIENT_KEY;
 const REDIRECT_URI = 'http://localhost:3000/callback';
 console.log("client_id 1: " + client_id);
 console.log("node:",process.env.NODE_ENV)
