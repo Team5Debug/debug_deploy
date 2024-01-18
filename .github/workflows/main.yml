@@ -21,13 +21,13 @@ jobs:
 
       - name: env세팅
         run: |
-          echo "REACT_APP_CLIENT_KEY: ${{ secrets.REACT_APP_CLIENT_KEY }}" >> .env
-          echo "REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}" >> .env
-          echo "REACT_APP_GITHUB_IP: ${{ secrets.REACT_APP_GITHUB_IP }}" >> .env
-          echo "REACT_APP_PORT: ${{ secrets.REACT_APP_PORT }}" >> .env
-          echo "REACT_APP_PAY_API_KEY: ${{ secrets.REACT_APP_PAY_API_KEY }}" >> .env
-          echo "REACT_APP_PAY_API_SECRET_KEY: ${{ secrets.REACT_APP_PAY_API_SECRET_KEY }}" >> .env
-          cat .env
+          echo "REACT_APP_CLIENT_KEY: ${{ secrets.REACT_APP_CLIENT_KEY }}" 
+          echo "REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}" 
+          echo "REACT_APP_GITHUB_IP: ${{ secrets.REACT_APP_GITHUB_IP }}" 
+          echo "REACT_APP_PORT: ${{ secrets.REACT_APP_PORT }}" 
+          echo "REACT_APP_PAY_API_KEY: ${{ secrets.REACT_APP_PAY_API_KEY }}"
+          echo "REACT_APP_PAY_API_SECRET_KEY: ${{ secrets.REACT_APP_PAY_API_SECRET_KEY }}" 
+    
          
       - name: 리액트 빌드
         run: |
