@@ -21,12 +21,12 @@ jobs:
 
       - name: env세팅
         run: |
-          echo "REACT_APP_CLIENT_KEY: ${{ secrets.REACT_APP_CLIENT_KEY }}" >> .env.production
-          echo "REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}" >> .env.production
-          echo "REACT_APP_GITHUB_IP: ${{ secrets.REACT_APP_GITHUB_IP }}" >> .env.production
-          echo "REACT_APP_PORT: ${{ secrets.REACT_APP_PORT }}" >> .env.production
-          echo "REACT_APP_PAY_API_KEY: ${{ secrets.REACT_APP_PAY_API_KEY }}" >> .env.production
-          echo "REACT_APP_PAY_API_SECRET_KEY: ${{ secrets.REACT_APP_PAY_API_SECRET_KEY }}" >> .env.production
+          echo "REACT_APP_CLIENT_KEY: ${{ secrets.REACT_APP_CLIENT_KEY }}" >> .env
+          echo "REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}" >> .env
+          echo "REACT_APP_GITHUB_IP: ${{ secrets.REACT_APP_GITHUB_IP }}" >> .env
+          echo "REACT_APP_PORT: ${{ secrets.REACT_APP_PORT }}" >> .env
+          echo "REACT_APP_PAY_API_KEY: ${{ secrets.REACT_APP_PAY_API_KEY }}" >> .env
+          echo "REACT_APP_PAY_API_SECRET_KEY: ${{ secrets.REACT_APP_PAY_API_SECRET_KEY }}" >> .env
         env:
           REACT_APP_CLIENT_KEY: ${{ secrets.REACT_APP_CLIENT_KEY }}
           REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
